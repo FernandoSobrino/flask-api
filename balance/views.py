@@ -1,4 +1,4 @@
-from flask import jsonify
+from flask import jsonify, request
 from . import app
 from .models import DBManager
 
@@ -26,6 +26,26 @@ def listar_movimientos():
         sql = "SELECT * from movimientos ORDER BY fecha, id"
         movimientos = db.consultaSQL(sql)
         resultado = {"status": "success", "results": movimientos}
+    except Exception as error:
+        resultado = {
+            "status": "error",
+            "message": str(error)
+        }
+    return jsonify(resultado)
+
+@app.route("/api/v1/movimientos/",methods=["POST"])
+def insertar_movimiento():
+    try:
+        sql = ("INSERT INTO movimientos (fecha,concepto,tipo,cantidad)"
+        "VALUES (:fecha, :concepto, :tipo, :cantidad)")
+        db = DBManager(RUTA)
+        ha_ido_bien = db.consultaConParametros(sql, request.json)
+        if ha_ido_bien:
+            resultado = {"status": "success"}
+        else:
+            resultado = {
+                "status": "error",
+                "message": "Error al insertar el movimiento en la base de datos"}
     except Exception as error:
         resultado = {
             "status": "error",
