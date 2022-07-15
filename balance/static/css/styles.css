@@ -116,4 +116,51 @@ table.paper .error {
     margin: 1rem 0;
     display: flex;
     align-items: center;
+
+
+}
+
+.overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, .5);
+    z-index: 9999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.overlay.off {
+    display: none;
+}
+
+.doble-anillo {
+    display: inline-block;
+    width: 80px;
+    height: 80px;
+}
+
+.doble-anillo:after {
+    content: " ";
+    display: block;
+    width: 64px;
+    height: 64px;
+    margin: 8px;
+    border: 6px solid white;
+    border-radius: 50%;
+    border-color: white transparent white transparent;
+    animation: giro 1.2s linear infinite;
+}
+
+@keyframes giro {
+    0% {
+        transform: rotate(0deg)
+    }
+
+    100% {
+        transform: rotate(360deg)
+    }
 }
